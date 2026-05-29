@@ -1,3 +1,4 @@
+
 main {
   background: radial-gradient(circle at top, #0f172a, #020617);
   padding: 20px;
@@ -13,7 +14,7 @@ body {
   color: white;
   flex-direction: column;
   min-height: 100vh;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   margin: 0;
   overflow-x: hidden;
 }
@@ -37,6 +38,7 @@ header {
   gap: 20px;
   /* espacio entre columnas */
   margin-top: 20px;
+  align-items: flex-start;
 }
 
 /* Cada panel */
@@ -52,11 +54,12 @@ header {
 .panel {
   flex: 1 1 420px;
   min-width: 280px;
-  background: #0f1c2e;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+  background: var(--bg-paneles) !important;
+    border: 1px solid var(--borde-paneles) !important;
+    color: var(--texto-principal) !important;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Botones estilo app */
@@ -67,7 +70,7 @@ button {
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+
 }
 
 button:hover {
@@ -165,7 +168,7 @@ progress, #barra-progreso-nativa, progress::-webkit-progress-bar, progress::-web
 .panel h2 {
   margin-bottom: 20px;
   font-size: 24px;
-  color: white;
+  color: var(--texto-principal) !important;
 }
 
 /* formulario */
@@ -178,20 +181,19 @@ form {
 /* labels */
 form label {
   font-size: 14px;
-  color: #b0b3b8;
+  color: var(--texto-secundario) !important;
   margin-bottom: -8px;
 }
 
 /* inputs y selects */
 form input,
 form select {
-  background: #131f33;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  padding: 14px;
-  color: white;
-  font-size: 15px;
-  transition: 0.3s;
+background: var(--bg-inputs) !important;
+    border: 1px solid var(--borde-paneles) !important;
+    border-radius: 12px;
+    padding: 14px;
+    color: var(--texto-principal) !important;
+    font-size: 15px;
 }
 
 /* focus */
@@ -211,13 +213,12 @@ form input::placeholder {
 form button {
   margin-top: 10px;
   background: linear-gradient(90deg, #22c55e, #16a34a);
-  color: white;
+  color: white !important;
   border: none;
   padding: 14px;
   border-radius: 14px;
   font-size: 15px;
   font-weight: bold;
-  transition: 0.3s;
 }
 
 /* hover botón */
@@ -240,7 +241,8 @@ form button:hover {
 
 .tipo-toggle {
   display: flex;
-  background: #131f33;
+  background: var(--bg-inputs) !important;
+  border: 1px solid var(--borde-paneles) !important;
   border-radius: 14px;
   padding: 5px;
   gap: 5px;
@@ -254,7 +256,9 @@ form button:hover {
   padding: 12px;
   border-radius: 10px;
   cursor: pointer;
-  transition: 0.3s;
+}
+.tipo-toggle button:not(.activo) {
+    color: var(--texto-secundario) !important;
 }
 
 /* estado activo */
@@ -314,7 +318,7 @@ form button:hover {
 .encabezado-movimientos h2 {
   margin: 0;
   font-size: 24px;
-  color: white;
+
 }
 
 .btn-ver-todos {
@@ -325,7 +329,7 @@ form button:hover {
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: 0.3s;
+
 }
 
 .btn-ver-todos:hover {
@@ -355,6 +359,7 @@ form button:hover {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 } /*
 Actualizacion Ann */
+
 .categoria-icono {
   display: inline-block;
   width: 20px;
@@ -391,12 +396,11 @@ Actualizacion Ann */
 }
 
 .movimiento {
-  background: #131f33;
+  background: var(--bg-inputs) !important;
   padding: 14px;
   margin-bottom: 10px;
   border-radius: 12px;
   border-left: 4px solid #22c55e;
-  transition: all 0.3s ease;
 }
 
 [data-theme="light"] .movimiento,
