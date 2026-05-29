@@ -161,6 +161,9 @@ function inicializarUI() {
     actualizarEncabezado();
     actualizarMovimientos();
     actualizarMetaUI();
+    calcularProgresoMetaNativa(); 
+    inicializarSistemaTemas(); 
+    actualizarGraficoDonaNativo();
 }
 
 function showMessage(text, type = "success") {
@@ -221,6 +224,8 @@ function agregarMovimiento() {
     guardarMovimientosSesion();
     actualizarEncabezado();
     actualizarMovimientos();
+    calcularProgresoMetaNativa(); // Actualizacion Ann
+    actualizarGraficoDonaNativo();
     showMessage("Movimiento guardado");
 
 }
@@ -233,6 +238,7 @@ function guardarMeta() {
     }
     if (metaTexto) metaTexto.textContent = `$${formatearNumero(metaValor)}`;
     localStorage.setItem("metaAhorro", metaValor.toString());
+    calcularProgresoMetaNativa(); // Actualizacion Ann
     showMessage("Meta guardada");
 }
 
@@ -242,6 +248,8 @@ function borrarTodo() {
     sessionStorage.removeItem(SESSION_KEY);
     actualizarEncabezado();
     actualizarMovimientos();
+    calcularProgresoMetaNativa();
+    actualizarGraficoDonaNativo();
     showMessage("Datos borrados");
 }
 
@@ -255,10 +263,10 @@ window.calcularTiempoMeta = function () {
     mostrarTiempoEstimado(resultado.resultado);
     dibujarGrafico(resultado.etiquetas, resultado.datos);
 
-    actualizarCards(resultado);
-    document.querySelector(".chart-container").classList.remove("oculto");/*Muestra el "Evolución del ahorro
+    const chartContainer = document.querySelector(".chart-container");
+    if (chartContainer) chartContainer.classList.remove("oculto");;/*Muestra el "Evolución del ahorro
                                                                        en el tiempo" eliminando la clase
-                                                                       que lo mantiene oculto*/
+                                                                       que lo mantiene oculto*/ // Mejora Ann
 mostrarToast("✅ Estimación exitosa");
 };
 function mostrarToast(mensaje) {
@@ -278,6 +286,144 @@ function tasaText(resultado) {
         tasa = ((resultado.ahorroMensual / resultado.ingresos) * 100).toFixed(1);
     }
     return `${tasa}%`;
+}
+
+// Barra de progreso (Corregida) 
+function calcularProgresoMetaNativa() {
+    const ingresos = finanzas.ingresos.reduce((acc, mov) => acc + Number(mov.monto || 0), 0);
+    const gastos = finanzas.gastos.reduce((acc, mov) => acc + Number(mov.monto || 0), 0);
+    const ahorroReal = ingresos - gastos;
+    const objetivo = Number(localStorage.getItem("metaAhorro")) || 0;
+
+    let porcentaje = objetivo > 0 ? Math.round((ahorroReal / objetivo) * 100) : 0;
+    porcentaje = Math.max(0, Math.min(porcentaje, 100));
+
+    const barra = document.getElementById('barra-progreso-nativa');
+    const txtPorcentaje = document.getElementById('txt-meta-porcentaje');
+    const txtAhorrado = document.getElementById('txt-meta-ahorrado');
+    const tarjeta = document.getElementById('tarjeta-meta-ahorro');
+    const txtObjetivoFijo = document.getElementById('txt-meta-objetivo-fijo');
+
+    if (barra) barra.value = porcentaje;
+    if (txtPorcentaje) txtPorcentaje.textContent = `${porcentaje}% completado`;
+    if (txtAhorrado) txtAhorrado.textContent = "$" + formatearNumero(Math.max(0, ahorroReal));
+    if (txtObjetivoFijo) txtObjetivoFijo.textContent = "$" + formatearNumero(objetivo);
+
+    // Control de alertas por clases (Permite que el CSS maneje la transición suave en unísono)
+    if (tarjeta && objetivo > 0) {
+        tarjeta.classList.remove('meta-exito', 'meta-advertencia'); 
+        
+        if (porcentaje >= 100) {
+            tarjeta.classList.add('meta-exito');
+        } else if (porcentaje < 35 && ahorroReal < gastos) {
+            tarjeta.classList.add('meta-advertencia');
+        }
+    }
+}
+//  Switch de temas (cinemática activa)
+function inicializarSistemaTemas() {
+    const switchTema = document.getElementById('input-switch-tema');
+    const iconoTema = document.getElementById('icono-estado-tema'); 
+    if (!switchTema) return;
+
+    const temaGuardado = localStorage.getItem('minifinance-tema') || 'dark';
+    document.documentElement.setAttribute('data-theme', temaGuardado);
+    switchTema.checked = temaGuardado === 'dark';
+
+    if (iconoTema) {
+        iconoTema.textContent = temaGuardado === 'dark' ? '☾' : '☼';
+    }
+
+    switchTema.addEventListener('change', (e) => {
+        const nuevoTema = e.target.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', nuevoTema);
+        localStorage.setItem('minifinance-tema', nuevoTema); 
+        
+        if (iconoTema) {
+            iconoTema.textContent = nuevoTema === 'dark' ? '☾' : '☼';
+        }
+        
+        // al ejecutar esto, forzamos el renderizado instantáneo coordinado de tus módulos
+        actualizarEncabezado();
+        calcularProgresoMetaNativa();
+        actualizarGraficoDonaNativo();
+    });
+}
+
+// Motor renderizado de la dona
+function actualizarGraficoDonaNativo() {
+    const categorizados = {};
+    let totalGastos = 0;
+
+    finanzas.gastos.forEach(mov => {
+        const cat = mov.categoria || "Sin categoría";
+        const monto = Number(mov.monto || 0);
+        categorizados[cat] = (categorizados[cat] || 0) + monto;
+        totalGastos += monto;
+    });
+
+    const totalGraficoEl = document.getElementById("monto-total-grafico");
+    const leyendaEl = document.getElementById("leyenda-dinamica-gastos");
+    const wrapperDona = document.querySelector(".wrapper-dona-grafica");
+
+    if (totalGraficoEl) {
+        totalGraficoEl.textContent = `$${formatearNumero(totalGastos)}`;
+    }
+
+    const paletaColores = {
+        "Comida": "#ef4444",      
+        "Ocio": "#a855f7",        
+        "Transporte": "#f97316",  
+        "Regalos": "#3b82f6",     
+        "Sueldo": "#22c55e"       
+    };
+
+    if (wrapperDona) {
+        if (totalGastos === 0) {
+            wrapperDona.style.background = "#334155";
+        } else {
+            let acumulado = 0;
+            const tramos = [];
+
+            Object.entries(categorizados).forEach(([categoria, monto]) => {
+                const porcentaje = (monto / totalGastos) * 100;
+                const color = paletaColores[categoria] || "#64748b";
+                tramos.push(`${color} ${acumulado}% ${acumulado + porcentaje}%`);
+                acumulado += porcentaje;
+            });
+
+            wrapperDona.style.setProperty("background", `conic-gradient(${tramos.join(", ")})`, "important");
+        }
+    }
+
+    if (leyendaEl) {
+        leyendaEl.innerHTML = "";
+        
+        Object.entries(categorizados).forEach(([categoria, monto]) => {
+            const porcentaje = totalGastos > 0 ? Math.round((monto / totalGastos) * 100) : 0;
+            const colorActual = paletaColores[categoria] || "#64748b";
+            
+            const item = document.createElement("li");
+            item.style.display = "flex";
+            item.style.justifyContent = "space-between";
+            item.style.alignItems = "center";
+            item.style.margin = "14px 0";
+            item.style.fontSize = "14px";
+            item.style.listStyle = "none";
+            
+            item.innerHTML = `
+                <div style="display:flex; align-items:center; gap:10px; flex:1;">
+                    <span style="width:12px; height:12px; background:${colorActual}; border-radius:50%; display:inline-block; flex-shrink:0;"></span>
+                    <span style="color:var(--texto-principal); font-weight: 500;">${categoria === "Comida" ? "Alimentación" : categoria}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; width:45%; align-items:center;">
+                    <span style="color:var(--texto-secundario); text-align:right; flex:1; padding-right:20px;">$${formatearNumero(monto)}</span>
+                    <span style="color:var(--texto-secundario); width:35px; text-align:right; font-weight:600;">${porcentaje}%</span>
+                </div>
+            `;
+            leyendaEl.appendChild(item);
+        });
+    }
 }
 
 window.agregarMovimiento = agregarMovimiento;
