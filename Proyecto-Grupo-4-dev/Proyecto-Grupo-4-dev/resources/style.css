@@ -539,9 +539,22 @@ Actualizacion Ann */
     justify-content: center !important;
 }
 
-[data-theme="light"] .centro-vacio-dona { background: #ffffff !important; }
+[data-theme="light"] .centro-vacio-dona { 
+    background: #ffffff !important; 
+}
 
-#monto-total-grafico, #ingresos, #gastos, #saldo, .monto-destacado-premium {
+/* Unimos el color variable con tu parche contra números gigantes */
+#monto-total-grafico, .centro-vacio-dona strong {
+    font-size: 14px !important; 
+    color: var(--texto-principal) !important; /* cambia según el tema claro/oscuro */
+    white-space: nowrap !important; 
+    display: block !important;
+    text-align: center !important;
+    font-weight: 700 !important;
+    word-break: break-all !important;          
+    max-width: 100%;                          
+}
+#ingresos, #gastos, #saldo, .monto-destacado-premium {
     word-break: break-all !important;
     max-width: 100%;
     display: inline-block;
