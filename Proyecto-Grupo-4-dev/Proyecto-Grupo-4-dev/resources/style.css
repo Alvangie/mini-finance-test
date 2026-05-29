@@ -569,47 +569,57 @@ html[data-theme="light"] .footer a { color: #db2777; }
 html[data-theme="light"] .footer a:hover { color: #be185d; }
 
 /* ========================================================
-   🚨 ESCUDO PROTECTOR: ARREGLO DE ESTADOS Y CONTRASSTE (MODO CLARO)
+   🎯 REPARACIÓN DE DISEÑO: CONTENEDOR REDONDEADO Y DONA CLARA
    ======================================================== */
 
-/* 1. Forzamos a que aparezca la CAJA CON RELIEVE, use el fondo claro y tenga sus bordes */
-html[data-theme="light"] body aside .panel-meta-premium,
-html[data-theme="light"] body aside .panel-meta-box,
-html[data-theme="light"] body aside .panel-meta-,
-html[data-theme="light"] body aside #tarjeta-meta-ahorro {
-    background: #f8fafc !important; /* Fondo grisáceo limpio de modo claro */
-    border: 1px solid #cbd5e1 !important; /* Borde con relieve visible */
-    box-shadow: 5px 5px 12px rgba(15, 23, 42, 0.06) !important;
+/* 1. Forzamos la estructura de caja moderna, redondeada y con espacio */
+html[data-theme="light"] aside .panel-meta-premium,
+html[data-theme="light"] aside .panel-meta-box,
+html[data-theme="light"] aside .panel-meta-,
+html[data-theme="light"] aside [id*="meta"] {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 18px !important; /* Bordes bien redondeados tipo app */
+    padding: 20px 16px !important;  /* Espacio interno para que respiren los textos */
+    margin: 15px 10px !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
-/* 2. Forzamos a que las LETRAS de la meta se pongan oscuras y no desaparezcan */
-html[data-theme="light"] body aside #tarjeta-meta-ahorro h3,
-html[data-theme="light"] body aside #tarjeta-meta-ahorro h4,
-html[data-theme="light"] body aside #tarjeta-meta-ahorro p,
-html[data-theme="light"] body aside #tarjeta-meta-ahorro span,
-html[data-theme="light"] body aside #tarjeta-meta-ahorro div,
-html[data-theme="light"] body aside .panel-meta-premium *,
-html[data-theme="light"] body aside .panel-meta-box * {
-    color: #0f172a !important; /* Gris oscuro hiper-legible */
+/* 2. Corregimos el color de TODOS los textos internos para que sean legibles */
+html[data-theme="light"] aside [id*="meta"] h3,
+html[data-theme="light"] aside [id*="meta"] h4,
+html[data-theme="light"] aside [id*="meta"] p,
+html[data-theme="light"] aside [id*="meta"] span,
+html[data-theme="light"] aside [id*="meta"] div,
+html[data-theme="light"] aside [class*="meta"] * {
+    color: #0f172a !important;
 }
 
-/* 3. Parche de seguridad para que el botón de fijar y el monto destacado mantengan el verde */
-html[data-theme="light"] body aside #tarjeta-meta-ahorro .monto-destacado-premium,
-html[data-theme="light"] body aside #tarjeta-meta-ahorro .monto-destacado-box,
-html[data-theme="light"] body aside #tarjeta-meta-ahorro button {
-    color: #ffffff !important; /* Letras blancas adentro de botones verdes */
+/* 3. Estilizado del botón secundario "Ver metas" para que no quede transparente */
+html[data-theme="light"] aside .btn-ver-metas-,
+html[data-theme="light"] aside .btn-ver-metas-box,
+html[data-theme="light"] aside button[class*="ver"] {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
 }
 
-/* 4. Forzamos a que el CENTRO DE LA DONA se vuelva completamente blanco */
-html[data-theme="light"] main .contenedor-movimientos .centro-vacio-dona,
-html[data-theme="light"] body main .centro-vacio-dona,
-html[data-theme="light"] .centro-vacio-dona { 
-    background: #ffffff !important; 
+/* 4. BLINDAJE DE LA DONA: Rompemos el fondo oscuro forzando la cascada desde el main */
+html[data-theme="light"] main #grafico-contenedor .centro-vacio-dona,
+html[data-theme="light"] main .wrapper-dona-grafica .centro-vacio-dona,
+html[data-theme="light"] .centro-vacio-dona,
+html[data-theme="light"] div[class*="dona"] div { 
+    background-color: #ffffff !important; 
+    background: #ffffff !important;
 }
 
-/* 5. Forzamos a que las letras de ADENTRO de la dona se queden oscuras en modo claro */
-html[data-theme="light"] main .centro-vacio-dona strong,
-html[data-theme="light"] main .centro-vacio-dona small,
+/* 5. Aseguramos el color del texto interno de la dona */
+html[data-theme="light"] .centro-vacio-dona strong,
+html[data-theme="light"] .centro-vacio-dona small,
 html[data-theme="light"] #monto-total-grafico {
     color: #0f172a !important;
 }
