@@ -568,3 +568,68 @@ html[data-theme="light"] .footer-info p, html[data-theme="light"] .footer p { co
 html[data-theme="light"] .footer a { color: #db2777; }
 html[data-theme="light"] .footer a:hover { color: #be185d; }
 
+/* ========================================================
+   🌓 ACOMODO INTEGRAL DE LA BARRA LATERAL Y DONA (MODO CLARO)
+   ======================================================== */
+
+/* 1. Reparamos el contenedor para que mantenga su forma original sin desarmarse */
+html[data-theme="light"] aside .panel-meta-box,
+html[data-theme="light"] aside .panel-meta-premium,
+html[data-theme="light"] aside .panel-meta- {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+}
+
+/* 2. Corregimos el contraste de los títulos y etiquetas (SIN romper su estructura) */
+html[data-theme="light"] aside .panel-meta-box h3,
+html[data-theme="light"] aside .panel-meta-box h4,
+html[data-theme="light"] aside .panel-meta-box span,
+html[data-theme="light"] aside .panel-meta-premium h3,
+html[data-theme="light"] aside .panel-meta-premium h4,
+html[data-theme="light"] aside .panel-meta-premium span,
+html[data-theme="light"] aside .panel-meta- h3,
+html[data-theme="light"] aside .panel-meta- h4,
+html[data-theme="light"] aside .panel-meta- span {
+    color: #0f172a !important;
+}
+
+/* 3. Evitamos que los textos cambien a blanco sobre fondo claro */
+html[data-theme="light"] aside #txt-meta-nombre,
+html[data-theme="light"] aside #txt-meta-porcentaje,
+html[data-theme="light"] aside .bloque-totales-meta {
+    color: #475569 !important;
+}
+
+/* 4. Mantenemos el botón de "Ver metas" visible y estético */
+html[data-theme="light"] aside .btn-ver-metas-box,
+html[data-theme="light"] aside .btn-ver-metas-premium,
+html[data-theme="light"] aside .btn-ver-metas- {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+/* ========================================================
+   📊 CORRECCIÓN ESTRICTA DEL GRÁFICO DE DONA
+   ======================================================== */
+
+/* En Modo Claro: Forzamos el centro blanco */
+html[data-theme="light"] .centro-vacio-dona,
+html[data-theme="light"] main .centro-vacio-dona {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+html[data-theme="light"] #monto-total-grafico {
+    color: #0f172a !important;
+}
+
+/* En Modo Oscuro: Aseguramos que vuelva a su color oscuro original de las chicas */
+html[data-theme="dark"] .centro-vacio-dona,
+html:not([data-theme="light"]) .centro-vacio-dona {
+    background-color: #0f172a !important;
+    background: #0f172a !important;
+}
+html:not([data-theme="light"]) #monto-total-grafico {
+    color: #ffffff !important;
+}
