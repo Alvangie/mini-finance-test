@@ -567,3 +567,49 @@ html[data-theme="light"] .footer { background: #e2e8f0; background-image: none; 
 html[data-theme="light"] .footer-info p, html[data-theme="light"] .footer p { color: #0f172a; }
 html[data-theme="light"] .footer a { color: #db2777; }
 html[data-theme="light"] .footer a:hover { color: #be185d; }
+
+/* ========================================================
+   🚨 ESCUDO PROTECTOR: ARREGLO DE ESTADOS Y CONTRASSTE (MODO CLARO)
+   ======================================================== */
+
+/* 1. Forzamos a que aparezca la CAJA CON RELIEVE, use el fondo claro y tenga sus bordes */
+html[data-theme="light"] body aside .panel-meta-premium,
+html[data-theme="light"] body aside .panel-meta-box,
+html[data-theme="light"] body aside .panel-meta-,
+html[data-theme="light"] body aside #tarjeta-meta-ahorro {
+    background: #f8fafc !important; /* Fondo grisáceo limpio de modo claro */
+    border: 1px solid #cbd5e1 !important; /* Borde con relieve visible */
+    box-shadow: 5px 5px 12px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* 2. Forzamos a que las LETRAS de la meta se pongan oscuras y no desaparezcan */
+html[data-theme="light"] body aside #tarjeta-meta-ahorro h3,
+html[data-theme="light"] body aside #tarjeta-meta-ahorro h4,
+html[data-theme="light"] body aside #tarjeta-meta-ahorro p,
+html[data-theme="light"] body aside #tarjeta-meta-ahorro span,
+html[data-theme="light"] body aside #tarjeta-meta-ahorro div,
+html[data-theme="light"] body aside .panel-meta-premium *,
+html[data-theme="light"] body aside .panel-meta-box * {
+    color: #0f172a !important; /* Gris oscuro hiper-legible */
+}
+
+/* 3. Parche de seguridad para que el botón de fijar y el monto destacado mantengan el verde */
+html[data-theme="light"] body aside #tarjeta-meta-ahorro .monto-destacado-premium,
+html[data-theme="light"] body aside #tarjeta-meta-ahorro .monto-destacado-box,
+html[data-theme="light"] body aside #tarjeta-meta-ahorro button {
+    color: #ffffff !important; /* Letras blancas adentro de botones verdes */
+}
+
+/* 4. Forzamos a que el CENTRO DE LA DONA se vuelva completamente blanco */
+html[data-theme="light"] main .contenedor-movimientos .centro-vacio-dona,
+html[data-theme="light"] body main .centro-vacio-dona,
+html[data-theme="light"] .centro-vacio-dona { 
+    background: #ffffff !important; 
+}
+
+/* 5. Forzamos a que las letras de ADENTRO de la dona se queden oscuras en modo claro */
+html[data-theme="light"] main .centro-vacio-dona strong,
+html[data-theme="light"] main .centro-vacio-dona small,
+html[data-theme="light"] #monto-total-grafico {
+    color: #0f172a !important;
+}
