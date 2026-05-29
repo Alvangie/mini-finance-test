@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 
 main {
   background: radial-gradient(circle at top, #0f172a, #020617);
@@ -300,9 +303,7 @@ form button:hover {
   transform: translateY(-8px);
 }
 
-* {
-  box-sizing: border-box;
-}
+
 
 /* ========================= 
    ENCABEZADO MOVIMIENTOS
