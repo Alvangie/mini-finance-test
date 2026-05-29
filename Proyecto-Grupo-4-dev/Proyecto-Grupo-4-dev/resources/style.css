@@ -144,11 +144,11 @@ body, main, .layout, .stats, .contenedor-movimientos {
     transition: color 0.3s ease-in-out !important;
 }
 
-/* 2. Elementos con colores planos, paneles y tus componentes premium */
+/* 2. Elementos con colores planos, paneles y tus componentes  */
 .sidebar, aside, #sidebar, .panel, .card, .display-card, 
 h2, h3, h4, p, span, label, input, select, option, button, .tipo-toggle, .tipo-toggle button, 
-.panel-meta-premium, .centro-vacio-dona, #txt-meta-nombre, #metaTexto, .bloque-totales-meta,
-#ingresos, #gastos, #saldo, #monto-total-grafico, .monto-destacado-premium, .categoria-encabezado, .movimiento {
+.panel-meta-, .centro-vacio-dona, #txt-meta-nombre, #metaTexto, .bloque-totales-meta,
+#ingresos, #gastos, #saldo, #monto-total-grafico, .monto-destacado-, .categoria-encabezado, .movimiento {
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out !important;
 }
 
@@ -159,7 +159,7 @@ progress, #barra-progreso-nativa, progress::-webkit-progress-bar, progress::-web
 
 /* Ajuste de sombras  para que el modo Claro sea limpio */
 [data-theme="light"] .panel, 
-[data-theme="light"] .panel-meta-premium {
+[data-theme="light"] .panel-meta- {
     box-shadow: 5px 5px 12px rgba(15, 23, 42, 0.06) !important;
     border: 1px solid var(--borde-paneles) !important; }
 
@@ -471,7 +471,7 @@ Actualizacion Ann */
 /* ========================================================
    Tarjeta meta 
    ======================================================== */
-.panel-meta-premium {
+.panel-meta- {
     background: var(--bg-meta-box) !important;
     border: 1px solid var(--borde-meta-box) !important;
     border-radius: 16px !important; 
@@ -484,20 +484,20 @@ Actualizacion Ann */
 }
 
 /* manejo de estados mediante clases CSS EVITA ERRORES */
-.panel-meta-premium.meta-exito {
+.panel-meta-.meta-exito {
     border-color: #22c55e !important;
     box-shadow: 0 0 15px rgba(34, 197, 94, 0.2) !important;
 }
 
-.panel-meta-premium.meta-advertencia {
+.panel-meta-.meta-advertencia {
     border-color: #f87171 !important;
     box-shadow: 0 0 15px rgba(248, 113, 113, 0.2) !important;
 }
 
-.meta-premium-header { display: flex !important; align-items: center !important; gap: 8px !important; margin-bottom: 15px !important; }
-.panel-meta-premium h3 { font-size: 14px !important; margin: 0 !important; font-weight: 600 !important; color: var(--texto-meta-titles) !important; }
-.meta-premium-body h4 { color: var(--texto-meta-labels) !important; font-size: 13px !important; margin: 0 0 4px 0 !important; font-weight: 400 !important; }
-.monto-destacado-premium { font-size: 26px !important; color: #22c55e !important; font-weight: 700 !important; margin: 4px 0 15px 0 !important; letter-spacing: -0.5px !important; }
+.meta--header { display: flex !important; align-items: center !important; gap: 8px !important; margin-bottom: 15px !important; }
+.panel-meta- h3 { font-size: 14px !important; margin: 0 !important; font-weight: 600 !important; color: var(--texto-meta-titles) !important; }
+.meta--body h4 { color: var(--texto-meta-labels) !important; font-size: 13px !important; margin: 0 0 4px 0 !important; font-weight: 400 !important; }
+.monto-destacado- { font-size: 26px !important; color: #22c55e !important; font-weight: 700 !important; margin: 4px 0 15px 0 !important; letter-spacing: -0.5px !important; }
 
 .form-meta-input { border: none !important; padding: 0 !important; margin: 10px 0 15px 0 !important; display: flex !important; gap: 6px !important; width: 100% !important; box-sizing: border-box !important; }
 .form-meta-input input { padding: 6px 10px !important; font-size: 12px !important; flex: 1 !important; min-width: 0 !important; background: var(--bg-meta-inputs) !important; border: 1px solid var(--borde-meta-inputs) !important; color: var(--texto-principal) !important; border-radius: 8px !important; }
@@ -511,7 +511,7 @@ Actualizacion Ann */
 
 .bloque-totales-meta { font-size: 12px !important; color: var(--texto-meta-labels) !important; margin-top: 15px !important; line-height: 1.6 !important; text-align: left !important; }
 .bloque-totales-meta span { color: var(--texto-meta-titles) !important; font-weight: 600 !important; }
-.btn-ver-metas-premium { width: 100% !important; background: rgba(255, 255, 255, 0.03) !important; border: 1px solid var(--borde-meta-inputs) !important; color: var(--texto-meta-titles) !important; padding: 10px !important; border-radius: 10px !important; font-size: 13px !important; font-weight: 500 !important; cursor: pointer !important; }
+.btn-ver-metas- { width: 100% !important; background: rgba(255, 255, 255, 0.03) !important; border: 1px solid var(--borde-meta-inputs) !important; color: var(--texto-meta-titles) !important; padding: 10px !important; border-radius: 10px !important; font-size: 13px !important; font-weight: 500 !important; cursor: pointer !important; }
 
 /* ========================================================
    Grafico dona
@@ -554,7 +554,7 @@ Actualizacion Ann */
     word-break: break-all !important;          
     max-width: 100%;                          
 }
-#ingresos, #gastos, #saldo, .monto-destacado-premium {
+#ingresos, #gastos, #saldo, .monto-destacado- {
     word-break: break-all !important;
     max-width: 100%;
     display: inline-block;
