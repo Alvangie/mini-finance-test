@@ -1,0 +1,52 @@
+
+.subsection-title {
+    font-size: 1.2rem;
+    color: #00ff9c;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+#resultadoSim {
+  margin-top: 15px;
+  padding: 10px;
+  text-align: center;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+  border-left: 4px solid #22c55e;
+  border-radius: 6px;
+}
+
+
+#resultadoSim:empty {
+  display: none;
+}
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #22c55e;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
