@@ -621,6 +621,34 @@ Actualizacion Ann */
 .mensaje-success { background: #22c55e; }
 .mensaje-error { background: #c0392b; }
 .mensaje.ocultar { opacity: 0; transform: translateY(-8px); }
+/* ========================================================
+   Cards de simulador modo claro
+   ======================================================== */
+[data-theme="light"] .stats .card,
+[data-theme="light"] .display-card,
+[data-theme="light"] .card.display-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 5px 5px 12px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Forzamos a que las tipografías internas de las tarjetas se pongan oscuras */
+[data-theme="light"] .stats .card h3,
+[data-theme="light"] .stats .card p,
+[data-theme="light"] .display-card h3,
+[data-theme="light"] .display-card p,
+[data-theme="light"] #ingresosCard,
+[data-theme="light"] #gastosCard,
+[data-theme="light"] #ahorroCard,
+[data-theme="light"] #tasaCard {
+    color: #0f172a !important;
+}
+
+/* Cambiamos el color de los textos complementarios abajo de la proyección */
+[data-theme="light"] .subsection-title,
+[data-theme="light"] #resultadoSim {
+    color: #0f172a !important;
+}
 
 /* adaptacion del footer */
 [data-theme="light"] .footer { background: #e2e8f0 !important; background-image: none !important; border-top: 1px solid #cbd5e1 !important; }
