@@ -1,387 +1,486 @@
-main {
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  padding: 20px;
-  width: 0;
-  flex: 1;
-  margin: 0;
-  padding-bottom:0;
+/* ========================================================
+   🔹 REGLAS GENERALES Y CAPA BASE DE LA APP
+   ======================================================== */
+* {
+    box-sizing: border-box;
 }
 
 body {
-  display: flex;
-  background: #0c1220;
-  color: white;
-  flex-direction: column;
-  min-height: 100vh;
-  font-family: Arial;
-  margin: 0;
-  overflow-x: hidden;
+    display: flex;
+    background: #0c1220;
+    color: white;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+main {
+    padding: 20px;
+    width: 0;
+    flex: 1;
+    margin: 0;
+    padding-bottom: 0;
+}
+
+.layout {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
 }
 
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-.layout {
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-}
-
-.contenedor-movimientos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  /* espacio entre columnas */
-  margin-top: 20px;
-}
-
-/* Cada panel */
-.panel {
-  flex: 1 1 420px;
-  min-width: 280px;
-  background: #0f1c2e;/* opcional estilo oscuro */
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* Panel más elegante */
-.panel {
-  flex: 1 1 420px;
-  min-width: 280px;
-  background: #0f1c2e;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
-}
-
-/* Botones estilo app */
-button {
-  background: transparent;
-  color: #22c55e;
-  border: 1px solid #22c55e;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #22c55e;
-  color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header h2 {
-  font-size: 26px;
-  font-weight: 600;
-  color: #4ade80;
-  margin: 0;
-  letter-spacing: 0.5px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #4ade80;
+    margin: 0;
+    letter-spacing: 0.5px;
 }
 
 .descripcion {
-  color: #b0b3b8;
-  /* gris suave tipo app */
-  font-size: 15px;
-  margin-top: 6px;
-  line-height: 1.4;
+    color: #b0b3b8;
+    font-size: 15px;
+    margin-top: 6px;
+    line-height: 1.4;
 }
 
-/* =========================
-   FORMULARIO MODERNO
-========================= */
+.contenedor-movimientos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+/* ========================================================
+   🌓 SISTEMA DE VARIABLES CONFIGURABLES (MÓDULO DE TEMAS)
+   ======================================================== */
+:root {
+    --bg-global: radial-gradient(circle at top, #0f172a, #020617);
+    --bg-paneles: linear-gradient(180deg, #0f172a, #0b1220);
+    --bg-meta-box: #111827; 
+    --borde-meta-box: rgba(255, 255, 255, 0.05);
+    --texto-principal: #ffffff;
+    --texto-secundario: #b0b3b8;
+    --texto-meta-labels: #9ca3af;
+    --texto-meta-titles: #ffffff;
+    --borde-paneles: rgba(0, 255, 255, 0.2);
+    --bg-inputs: #131f33;
+    --bg-meta-inputs: #1f2937;
+    --borde-meta-inputs: rgba(255, 255, 255, 0.1);
+    --bg-pista-progress: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="light"] {
+    --bg-global: radial-gradient(circle at top, #ffffff, #e2e8f0);
+    --bg-paneles: #ffffff;
+    --bg-meta-box: #f8fafc; 
+    --borde-meta-box: #cbd5e1;
+    --texto-principal: #0f172a;
+    --texto-secundario: #475569;
+    --texto-meta-labels: #475569;
+    --texto-meta-titles: #0f172a;
+    --borde-paneles: #cbd5e1;
+    --bg-inputs: #f8fafc;
+    --bg-meta-inputs: #ffffff;
+    --borde-meta-inputs: #cbd5e1;
+    --bg-pista-progress: #cbd5e1;
+}
+
+/* ========================================================
+   🌓 SINCRONIZACIÓN CINEMÁTICA EN UNÍSONO (REPARADO)
+   ======================================================== */
+
+/* 1. Elementos con degradados de fondo: Se les remueve la transición de background 
+      para evitar parpadeos, recalculando el degradado al instante en bloque */
+body, main, .layout, .stats, .contenedor-movimientos {
+    background: var(--bg-global) !important;
+    color: var(--texto-principal) !important;
+    transition: color 0.3s ease-in-out !important;
+}
+
+/* 2. Elementos con colores planos, paneles y tus componentes premium */
+.sidebar, aside, #sidebar, .panel, .card, .display-card, 
+h2, h3, h4, p, span, label, input, select, option, button, .tipo-toggle, .tipo-toggle button, 
+.panel-meta-premium, .centro-vacio-dona, #txt-meta-nombre, #metaTexto, .bloque-totales-meta,
+#ingresos, #gastos, #saldo, #monto-total-grafico, .monto-destacado-premium, .categoria-encabezado, .movimiento {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out !important;
+}
+
+/* 3. Excepción reglamentaria para evitar saltos gráficos bruscos en barras de progreso */
+progress, #barra-progreso-nativa, progress::-webkit-progress-bar, progress::-webkit-progress-value {
+    transition: none !important;
+}
+
+/* ========================================================
+   🎯 PANELES GENERALES (DISEÑO INTEGRADO MÓVIL)
+   ======================================================== */
+.panel {
+    flex: 1 1 420px;
+    min-width: 280px;
+    background: var(--bg-paneles) !important;
+    border: 1px solid var(--borde-paneles) !important;
+    color: var(--texto-principal) !important;
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Ajuste de sombras premium para que el Modo Claro sea limpio */
+[data-theme="light"] .panel, 
+[data-theme="light"] .panel-meta-premium {
+    box-shadow: 5px 5px 12px rgba(15, 23, 42, 0.06) !important;
+    border: 1px solid var(--borde-paneles) !important;
+}
 
 .panel h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: white;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--texto-principal) !important;
 }
 
-/* formulario */
+button {
+    background: transparent;
+    color: #22c55e;
+    border: 1px solid #22c55e;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #22c55e;
+    color: black;
+}
+
+/* Estructura limpia de Formularios */
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-/* labels */
 form label {
-  font-size: 14px;
-  color: #b0b3b8;
-  margin-bottom: -8px;
+    font-size: 14px;
+    color: var(--texto-secundario) !important;
+    margin-bottom: -8px;
 }
 
-/* inputs y selects */
-form input,
-form select {
-  background: #131f33;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  padding: 14px;
-  color: white;
-  font-size: 15px;
-  transition: 0.3s;
+form input, form select {
+    background: var(--bg-inputs) !important;
+    border: 1px solid var(--borde-paneles) !important;
+    border-radius: 12px;
+    padding: 14px;
+    color: var(--texto-principal) !important;
+    font-size: 15px;
 }
 
-/* focus */
-form input:focus,
-form select:focus {
-  outline: none;
-  border: 1px solid #22c55e;
-  box-shadow: 0 0 8px rgba(34,197,94,0.3);
+form input:focus, form select:focus {
+    outline: none;
+    border: 1px solid #22c55e;
+    box-shadow: 0 0 8px rgba(34,197,94,0.3);
 }
 
-/* placeholder */
 form input::placeholder {
-  color: #64748b;
+    color: #64748b;
 }
 
-/* botón principal */
 form button {
-  margin-top: 10px;
-  background: linear-gradient(90deg, #22c55e, #16a34a);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: bold;
-  transition: 0.3s;
+    margin-top: 10px;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    color: white !important;
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: bold;
 }
 
-/* hover botón */
 form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(34,197,94,0.4);
-}
-
-/* panel más parecido a app mobile */
-.panel {
-  background: linear-gradient(180deg, #0f172a, #0b1220);
-  border-radius: 22px;
-  padding: 25px;
-}
-
-/* contenedor */
-.contenedor-movimientos {
-  align-items: flex-start;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(34,197,94,0.4);
 }
 
 .tipo-toggle {
-  display: flex;
-  background: #131f33;
-  border-radius: 14px;
-  padding: 5px;
-  gap: 5px;
+    display: flex;
+    background: var(--bg-inputs) !important;
+    border: 1px solid var(--borde-paneles) !important;
+    border-radius: 14px;
+    padding: 5px;
+    gap: 5px;
 }
 
 .tipo-toggle button {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: #cbd5e1;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #cbd5e1;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-/* estado activo */
+.tipo-toggle button:not(.activo) {
+    color: var(--texto-secundario) !important;
+}
+
 .tipo-toggle .activo {
-  background: #22c55e;
-  color: white;
+    background: #22c55e;
+    color: white;
 }
 
-#alertas {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 1000;
-}
-
-.mensaje {
-  padding: 12px 16px;
-  border-radius: 12px;
-  color: #ffffff;
-  font-weight: 600;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  opacity: 1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.mensaje-success {
-  background: #22c55e;
-}
-
-.mensaje-error {
-  background: #c0392b;
-}
-
-.mensaje.ocultar {
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* ========================= 
-   ENCABEZADO MOVIMIENTOS
-========================= */
-
+/* ========================================================
+   📊 SECCIÓN INTEGRADA: MOVIMIENTOS RECIENTES (ELLAS)
+   ======================================================== */
 .encabezado-movimientos {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .encabezado-movimientos h2 {
-  margin: 0;
-  font-size: 24px;
-  color: white;
+    margin: 0;
+    font-size: 24px;
 }
 
 .btn-ver-todos {
-  background: transparent;
-  color: #22c55e;
-  border: 1px solid #22c55e;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.3s;
+    background: transparent;
+    color: #22c55e;
+    border: 1px solid #22c55e;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .btn-ver-todos:hover {
-  background: #22c55e;
-  color: black;
+    background: #22c55e;
+    color: black;
 }
 
-/* ========================= 
-   MOVIMIENTOS RECIENTES
-========================= */
-
 .categoria-encabezado {
-  margin-top: 20px;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] .categoria-encabezado {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .categoria-encabezado h3 {
-  margin: 0;
-  font-size: 16px;
-  color: #cbd5e1;
-  font-weight: 600;
+    margin: 0;
+    font-size: 16px;
+    color: var(--texto-secundario) !important;
+    font-weight: 600;
 }
 
 .categoria-icono {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  vertical-align: middle;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
 }
 
-.categoria-sueldo {
-  background-image: url("img/iconos_movimientos_recientes/sueldo.png");
-}
-
-.categoria-comida {
-  background-image: url("img/iconos_movimientos_recientes/comida.png");
-}
-
-.categoria-transporte {
-  background-image: url("img/iconos_movimientos_recientes/transporte.png");
-}
-
-.categoria-regalos {
-  background-image: url("img/iconos_movimientos_recientes/regalos.png");
-}
-
-.categoria-ocio {
-  background-image: url("img/iconos_movimientos_recientes/ocio.png");
-}
-
-.categoria-icono.default {
-  background-image: url("img/iconos_movimientos_recientes/sueldo.png");
-}
+/* Mapeo de rutas de imágenes originales */
+.categoria-sueldo { background-image: url("img/iconos_movimientos_recientes/sueldo.png"); }
+.categoria-comida { background-image: url("img/iconos_movimientos_recientes/comida.png"); }
+.categoria-transporte { background-image: url("img/iconos_movimientos_recientes/transporte.png"); }
+.categoria-regalos { background-image: url("img/iconos_movimientos_recientes/regalos.png"); }
+.categoria-ocio { background-image: url("img/iconos_movimientos_recientes/ocio.png"); }
+.categoria-icono.default { background-image: url("img/iconos_movimientos_recientes/sueldo.png"); }
 
 .movimiento {
-  background: #131f33;
-  padding: 14px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  border-left: 4px solid #22c55e;
-  transition: all 0.3s ease;
+    background: var(--bg-inputs) !important;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border-left: 4px solid #22c55e;
+}
+
+[data-theme="light"] .movimiento,
+[data-theme="light"] .movimiento p,
+[data-theme="light"] .movimiento strong {
+    color: #0f172a !important;
 }
 
 .movimiento:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.movimiento.ingreso {
-  border-left-color: #22c55e;
-}
-
-.movimiento.gasto {
-  border-left-color: #ef4444;
-}
-
-.movimiento-contenido {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.movimiento-info {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.movimiento-info strong {
-  font-size: 20px;
-}
-
+.movimiento.ingreso { border-left-color: #22c55e; }
+.movimiento.gasto { border-left-color: #ef4444; }
+.movimiento-contenido { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.movimiento-info { display: flex; gap: 10px; align-items: center; }
+.movimiento-info strong { font-size: 20px; }
+.movimiento-monto { font-weight: bold; font-size: 16px; }
+.movimiento-monto.ingreso { color: #22c55e; }
+.movimiento-monto.gasto { color: #ef4444; }
+.movimiento-fecha { font-size: 12px; color: #64748b; text-align: right; }
 .movimiento-frecuencia {
-  font-size: 12px;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 3px 8px;
-  border-radius: 6px;
-  text-transform: capitalize;
+    font-size: 12px;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-transform: capitalize;
 }
 
-.movimiento-monto {
-  font-weight: bold;
-  font-size: 16px;
+/* ========================================================
+   🎯 TARJETA DE METAS COMPACTA PREMIUM (ÁNGEL)
+   ======================================================== */
+.panel-meta-premium {
+    background: var(--bg-meta-box) !important; 
+    border: 1px solid var(--borde-meta-box) !important;
+    border-radius: 16px !important;
+    padding: 20px 16px !important;
+    margin: 15px 10px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4) !important;
 }
 
-.movimiento-monto.ingreso {
-  color: #22c55e;
+/* Manejo de estados mediante clases CSS (Evita tirones en las transiciones) */
+.panel-meta-premium.meta-exito {
+    border-color: #22c55e !important;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.2) !important;
 }
 
-.movimiento-monto.gasto {
-  color: #ef4444;
+.panel-meta-premium.meta-advertencia {
+    border-color: #f87171 !important;
+    box-shadow: 0 0 15px rgba(248, 113, 113, 0.2) !important;
 }
 
-.movimiento-fecha {
-  font-size: 12px;
-  color: #64748b;
-  text-align: right;
+.meta-premium-header { display: flex !important; align-items: center !important; gap: 8px !important; margin-bottom: 15px !important; }
+.panel-meta-premium h3 { font-size: 14px !important; margin: 0 !important; font-weight: 600 !important; color: var(--texto-meta-titles) !important; }
+.meta-premium-body h4 { color: var(--texto-meta-labels) !important; font-size: 13px !important; margin: 0 0 4px 0 !important; font-weight: 400 !important; }
+.monto-destacado-premium { font-size: 26px !important; color: #22c55e !important; font-weight: 700 !important; margin: 4px 0 15px 0 !important; letter-spacing: -0.5px !important; }
+
+.form-meta-input { border: none !important; padding: 0 !important; margin: 10px 0 15px 0 !important; display: flex !important; gap: 6px !important; width: 100% !important; box-sizing: border-box !important; }
+.form-meta-input input { padding: 6px 10px !important; font-size: 12px !important; flex: 1 !important; min-width: 0 !important; background: var(--bg-meta-inputs) !important; border: 1px solid var(--borde-meta-inputs) !important; color: var(--texto-principal) !important; border-radius: 8px !important; }
+.form-meta-input button { padding: 6px 12px !important; font-size: 12px !important; background: #22c55e !important; color: white !important; border: none !important; border-radius: 8px !important; font-weight: 600 !important; cursor: pointer !important; }
+.meta-progreso-badge { display: flex !important; justify-content: space-between !important; font-size: 12px !important; color: var(--texto-meta-labels) !important; margin-bottom: 6px !important; }
+
+#barra-progreso-nativa { -webkit-appearance: none !important; appearance: none !important; border: none !important; width: 100% !important; height: 8px !important; background: var(--bg-pista-progress) !important; border-radius: 10px !important; overflow: hidden !important; display: block !important; }
+#barra-progreso-nativa::-webkit-progress-bar { background: var(--bg-pista-progress) !important; border-radius: 10px !important; }
+#barra-progreso-nativa::-webkit-progress-value { background: #22c55e !important; border-radius: 10px !important; }
+#barra-progreso-nativa::-moz-progress-bar { background: #22c55e !important; border-radius: 10px !important; }
+
+.bloque-totales-meta { font-size: 12px !important; color: var(--texto-meta-labels) !important; margin-top: 15px !important; line-height: 1.6 !important; text-align: left !important; }
+.bloque-totales-meta span { color: var(--texto-meta-titles) !important; font-weight: 600 !important; }
+.btn-ver-metas-premium { width: 100% !important; background: rgba(255, 255, 255, 0.03) !important; border: 1px solid var(--borde-meta-inputs) !important; color: var(--texto-meta-titles) !important; padding: 10px !important; border-radius: 10px !important; font-size: 13px !important; font-weight: 500 !important; cursor: pointer !important; }
+
+/* ========================================================
+   📊 TU COMPONENTE DE GRÁFICO DE DONA NATIVO
+   ======================================================== */
+.wrapper-dona-grafica {
+    position: relative !important;
+    width: 155px !important; 
+    height: 155px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 20px auto !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
+
+.centro-vacio-dona {
+    width: 115px !important; 
+    height: 115px !important;
+    background: var(--bg-paneles) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+[data-theme="light"] .centro-vacio-dona { background: #ffffff !important; }
+
+#monto-total-grafico, #ingresos, #gastos, #saldo, .monto-destacado-premium {
+    word-break: break-all !important;
+    max-width: 100%;
+    display: inline-block;
+}
+
+.centro-vacio-dona small { color: var(--texto-secundario) !important; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; }
+#leyenda-dinamica-gastos { padding: 0 !important; margin: 15px 5px 0 5px !important; list-style: none !important; }
+
+/* ========================================================
+   🌓 SWITCH PREMIUM MODERNO TIPO IPHONE
+   ======================================================== */
+.panel-control-tema {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 10px 14px !important;
+    margin: 20px 10px 0 10px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--borde-paneles) !important;
+}
+
+[data-theme="light"] .panel-control-tema { background: rgba(0, 0, 0, 0.03) !important; }
+.label-tema { font-size: 14px !important; font-weight: 500 !important; color: var(--texto-principal) !important; flex: 1 !important; margin-left: 10px !important; text-align: left !important; }
+.switch-contenedor-estetico { position: relative !important; display: inline-block !important; width: 46px !important; height: 24px !important; cursor: pointer !important; }
+.switch-contenedor-estetico input { opacity: 0 !important; width: 0 !important; height: 0 !important; }
+.slider-redondeado-dinamico { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; background-color: #4b5563 !important; border-radius: 34px !important; }
+[data-theme="light"] .slider-redondeado-dinamico { background-color: #cbd5e1 !important; }
+
+.slider-redondeado-dinamico::before {
+    position: absolute !important;
+    content: "" !important;
+    height: 18px !important;
+    width: 18px !important;
+    left: 3px !important;
+    bottom: 3px !important;
+    background-color: white !important;
+    transition: transform 0.3s ease !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+
+.switch-contenedor-estetico input:checked + .slider-redondeado-dinamico { background-color: #16a34a !important; }
+.switch-contenedor-estetico input:checked + .slider-redondeado-dinamico::before { transform: translateX(22px) !important; }
+
+/* ========================================================
+   🌓 SOBREESCRITURAS DE COMPONENTES EN MODO CLARO
+   ======================================================== */
+[data-theme="light"] .sidebar, [data-theme="light"] aside, [data-theme="light"] #sidebar {
+    background: #ffffff !important;
+    border-right: 1px solid #cbd5e1 !important;
+}
+
+[data-theme="light"] .sidebar h1, [data-theme="light"] .sidebar span, [data-theme="light"] aside ul li a {
+    color: #0f172a !important;
+}
+
+[data-theme="light"] aside ul li a.active { color: #22c55e !important; }
+
+#alertas { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+.mensaje { padding: 12px 16px; border-radius: 12px; color: #ffffff; font-weight: 600; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); opacity: 1; transition: opacity 0.3s ease, transform 0.3s ease; }
+.mensaje-success { background: #22c55e; }
+.mensaje-error { background: #c0392b; }
+.mensaje.ocultar { opacity: 0; transform: translateY(-8px); }
+
+/* Adaptación premium del footer de Daina */
+[data-theme="light"] .footer { background: #e2e8f0 !important; background-image: none !important; border-top: 1px solid #cbd5e1 !important; }
+[data-theme="light"] .footer-info p, [data-theme="light"] .footer p { color: #0f172a !important; }
+[data-theme="light"] .footer a { color: #db2777 !important; }
+[data-theme="light"] .footer a:hover { color: #be185d !important; }
